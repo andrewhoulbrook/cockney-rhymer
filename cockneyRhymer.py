@@ -15,10 +15,8 @@ from bnc import bigrams
 from operator import itemgetter
 
 RHYME_URL = "https://api.datamuse.com/words?rel_rhy="   # Datamuse Rhyme Words API endpoint
-
-LEM = WordNetLemmatizer()     # Instantiate nltk's WordNet lemmatizer object
-
-INF = inflect.engine()        # Instantiate and Inflect object for generating noun plurals
+LEM = WordNetLemmatizer()                               # Instantiate nltk's WordNet lemmatizer object
+INF = inflect.engine()                                  # Instantiate and Inflect object for generating noun plurals
 
 # For a given word, retrieve rhyming words via HTTP GET request to the awesome Datamuse API. Return list of matching rhyme words.
 def get_rhyme(word):
@@ -36,8 +34,20 @@ def get_rhyme(word):
    
     return rhyme_words
 
+# For a given noun, find at matching collocation from noun-noun bigrams extracted from the British National Corpus. Return first matching bigram or 'none'.
+def get_collocations(rhyme_words):
+    collocations = []
+    for rhyme_word in rhyme_words:
+        for word in bigrams:
+            # Look for match between rhyming word and second word in a BNC noun-noun collocation
+            if word[0].decode('utf8') == rhyme_word: 
+                collocations.append([word[0], word[1], int(word[2])])
+            else: continue
+    
+    return collocations
+
 # Extract first found collocation already present in Datamuse API's response. Return collocation. 
-# These collocations can be used as a backup if no match found to collocations in the BNC.
+# These collocations can be used as a *backup* if no match found to collocations in the BNC.
 def get_rhyme_collocations(rhyme_words):
     rhyme_collocations = []
     for rhyme_word in rhyme_words:
@@ -46,23 +56,10 @@ def get_rhyme_collocations(rhyme_words):
 
     return rhyme_collocations
 
-# For a given noun, find at matching collocation from noun-noun bigrams extracted from the British National Corpus. Return first matching bigram or 'none'.
-def get_collocations(rhyme_words):
-    collocations = []
-    for rhyme_word in rhyme_words:
-        for word in bigrams:
-            # Look for match between rhyming word and second word in a BNC noun-noun collocation
-            if word[0].decode('utf8') == rhyme_word: 
-                print("rhymes with {}, {} {} ({})".format(word[0], word[1], word[0], word[2]))
-                collocations.append([word[0], word[1], int(word[2])])
-            else: continue
-    
-    return collocations
-
 # Perform word stemming or lemmatization. Returns stemmed words or lemmas 
 def stem(word):
 
-    # Use NLTK lemmatization. Could also use NLTK's PorterStemmer as an alternative option.
+    # Use NLTK lemmatization. Could also use a stemmer such as NLTK's PorterStemmer as an alternative option.
     stem = LEM.lemmatize(word)
 
     return stem
@@ -70,7 +67,7 @@ def stem(word):
 # Process the user's text with NLTK to extract nouns from the text. Return a list of nouns.
 def nlp(text):
     # Tokenize text into words, returns list of words
-    tokens = word_tokenize(text)        
+    tokens = word_tokenize(text.lower())        
 
     # Apply Parts-of-Speech tagging, returning tagged tuples for each word
     tagged_tokens = pos_tag(tokens) 
@@ -80,7 +77,7 @@ def nlp(text):
     nouns = []
     for tagged_token in tagged_tokens:
         if 'NN' in tagged_token[1]: 
-            if 'NNS' in tagged_token[1] or 'NNPS' in tagged_tokens[1]: 
+            if 'NNS' in tagged_token[1] or 'NNPS' in tagged_tokens[1]:
                 if INF.singular_noun(tagged_token[0]):
                     if INF.singular_noun(tagged_token[0]) not in tagged_token[0] or stem(tagged_token[0]) == tagged_token[0]:
                         nouns.append([tagged_token[0], 'irr_plural'])
@@ -108,11 +105,10 @@ def build(input_text, mode):
         cockney_nouns = get_collocations(rhyme_words)
 
         # If no matches found within the BNC, look for collocations already existing within the list of rhyming words
-        if cockney_nouns == None: 
-            cockney_nouns = get_rhyme_collocations(rhyme_words)
+        if cockney_nouns == None: cockney_nouns = get_rhyme_collocations(rhyme_words)
 
         # Sort collocations based on BNC scores (how common the collocation is within the BNC data)
-        if cockney_nouns: 
+        if cockney_nouns:           
             cockney_nouns = sorted(cockney_nouns, key=itemgetter(2), reverse=True)
 
             # Select a random match from the list of BNC collocations
@@ -121,6 +117,9 @@ def build(input_text, mode):
             else: 
                 # Select the collocation with the highest BNC frequency score 
                 cockney_noun = cockney_nouns[0]
+
+            # Print to CLI the selected rhyming noun pair that will be used to create the rhyming text 
+            print("{} rhymes with {}, {} {} ({})".format(noun[0], cockney_noun[0], cockney_noun[1], cockney_noun[0], cockney_noun[2]))
 
             # Replace original noun in user's input text with cockney rhyming noun
             # Generate plural of cockney noun if replacing an original plural noun
@@ -134,35 +133,39 @@ def build(input_text, mode):
 
 # Main
 def main():
-    mode = sys.argv[1]
-    io_mode = sys.argv[2]
-
     output_filepath = None
     input_filepath = None
     output_text = None
     input_text = None
+
+    mode = sys.argv[1]              # Read option for *best* or *random* rhyming noun matches
+    io_mode = sys.argv[2]           # Read option for i/o mode, read/write to file paths or read/write to CLI
 
     # Handle user input. Check input mode and read input data from file if given
     # User options: 
     #   -r for selecting random matches for rhyming nouns
     #   -b for selecting Datamuse's best scored matched for rhyming nouns  
     random = False
-    if mode == '-r': random = True
+    if mode == '-r': random = True              
     elif mode == '-b': random = False
     else: print("Error: Select -r or -b options"); sys.exit(1)
 
+    # Handle script input mode.
+    # Read input text from a file if given, otherwise read a text string pass into the script
     if io_mode == "-f": 
-        input_filepath = sys.argv[2]
-        input_text = open(input_filepath, 'r').read()     # Read input text from given filepath
-        output_filepath = sys.argv[3]
+        input_filepath = sys.argv[3]                             # Get input file path
+        input_text = open(input_filepath, 'r').read()            # Read input text from given file path for conversion to rhyming text
+        output_filepath = sys.argv[4]                            # Get output file path to save the rhyming text to
     else:
-        input_text = sys.argv[2]                          # Read input text from CLI
+        input_text = sys.argv[2]                                 # Read input text string from CLI
 
     # Convert user's input text to cockney rhyming text
-    output_text = build(input_text, random)
+    output_text = build(input_text.lower(), random)
 
-    # Handle script output. Print output text to a file if given otherwise print to stdout
+    # Handle script output. 
+    # Print output text to a file if given, otherwise print to stdout
     if output_filepath is not None:
+        print (output_text)
         with open(output_filepath, 'w') as foutput:
             foutput.write(output_text.encode('utf8'))
     else: print(output_text)

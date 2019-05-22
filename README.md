@@ -143,6 +143,11 @@ Enjoy and Michael Banks for reading!
   <img src="/doc/rubadubdub.png"/>
 </p>
 
+## To Do
+
+* The BNC dataset of noun-noun bi-grams still requires some cleaning
+* Implement a built in rhyming algorithm to replace the DataMuse API
+
 ## Built With
 
 * [Python](http://www.python.org)

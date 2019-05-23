@@ -1,8 +1,9 @@
 #!/usr/bin/python
 # -*- encoding: utf-8 -*-
 # A rhyming slang generator mimicing the style of Cockney Rhyming Slang. Hav'a butcher's at the code below. 
-# Usage: >>> python cockneyRhymer.py inputText.txt outputText.txt
-#        >>> python cockneyRhymer.py -r "You're having a laugh aren't you?"
+# Usage: >>> python cockneyRhymer.py -b -f inputText.txt outputText.txt
+#        >>> python cockneyRhymer.py -b "You're having a laugh aren't you?"
+#        >>> python cockneyRhymer.py -r "I'll call you on the phone."
 import sys
 import codecs
 import requests
@@ -118,7 +119,7 @@ def build(input_text, mode):
                 # Select the collocation with the highest BNC frequency score 
                 cockney_noun = cockney_nouns[0]
 
-            # Print to CLI the selected rhyming noun pair that will be used to create the rhyming text 
+            # Print to terminal the selected rhyming noun pair that will be used to create the rhyming text 
             print("{} rhymes with {}, {} {} ({})".format(noun[0], cockney_noun[0], cockney_noun[1], cockney_noun[0], cockney_noun[2]))
 
             # Replace original noun in user's input text with cockney rhyming noun
@@ -139,7 +140,7 @@ def main():
     input_text = None
 
     mode = sys.argv[1]              # Read option for *best* or *random* rhyming noun matches
-    io_mode = sys.argv[2]           # Read option for i/o mode, read/write to file paths or read/write to CLI
+    io_mode = sys.argv[2]           # Read option for i/o mode, read/write to file paths or read/write to terminal
 
     # Handle user input. Check input mode and read input data from file if given
     # User options: 
@@ -157,7 +158,7 @@ def main():
         input_text = open(input_filepath, 'r').read()            # Read input text from given file path for conversion to rhyming text
         output_filepath = sys.argv[4]                            # Get output file path to save the rhyming text to
     else:
-        input_text = sys.argv[2]                                 # Read input text string from CLI
+        input_text = sys.argv[2]                                 # Read input text string
 
     # Convert user's input text to cockney rhyming text
     output_text = build(input_text.lower(), random)

@@ -4,7 +4,7 @@ A script to generate Cockney rhyming slang-style phrase constructions (just for 
 
 ## Rhyming Slang
 
-Rhyming slang, Cockney rhyming slang most famously, is a humorous slang construction in the English language. Cockney rhyming slang was believed to originate from London's East End in the mid-nineteenth century. Whether rhyming slang emerged by linguistic accident, was a game that became popular or a deliberate cyptolect remains open to speculation. 
+Rhyming slang, Cockney rhyming slang most famously, is a humorous slang construction in the English language. Cockney rhyming slang is believed to originate from London's East End in the mid-nineteenth century. Whether rhyming slang emerged by linguistic accident, was a game that became popular or a deliberate cyptolect remains open to speculation. 
 
 <p align="center">
   <img src="/doc/diamond_geezer.jpg"/>

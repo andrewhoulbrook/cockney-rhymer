@@ -7,7 +7,7 @@ A script to generate Cockney rhyming slang-style phrase constructions (just for 
 Rhyming slang, Cockney rhyming slang most famously, is a humorous slang construction in the English language. Cockney rhyming slang was believed to originate from London's East End in the mid-nineteenth century. Whether rhyming slang emerged by linguistic accident, was a game that became popular or a deliberate cyptolect remains open to speculation. 
 
 <p align="center">
-  <img src="/doc/diamond_geezer.png"/>
+  <img src="/doc/diamond_geezer.jpg"/>
 </p>
 
 Rhyming slang continues to evolve with the more modern **Mockney**. You can read more about the history Cockney rhyming slang [here](https://www.cockneyrhymingslang.co.uk/blog/what-is-cockney-rhyming-slang/).
@@ -21,7 +21,7 @@ E.g. "butcher's hook" where "hook" rhymes with "look" which can used to construc
 While typically the rhyming word is omitted, it's not always the case. E.g. "boat race" where "race" rhymes with "face" is more commonly used as "did you see his boat race?" rather than "did you see his boat?" The use of "Giraffe" for "Laugh" is another irregular example. 
 
 <p align="center">
-  <img src="/doc/sign.png"/>
+  <img src="/doc/sign.jpg"/>
 </p>
 
 Rhyming slang can be characterized as either phonetic or phono-semantic in form. This script is build around phonetic forms of rhyming slang only. Authentic Cockney rhyming slang doesn't only consist of rhyme associations; many of the Cockney expressions also have rich semantic links [read more here](https://www.theguardian.com/education/2014/jun/09/guide-to-cockney-rhyming-slang).
@@ -145,7 +145,7 @@ Last but not least, my favourite cockneyRhymer.py alternative for the classic "D
 Enjoy and Michael Banks for reading!
 
 <p align="center">
-  <img src="/doc/rubadubdub.png"/>
+  <img src="/doc/rubadubdub.jpg"/>
 </p>
 
 ## To Do

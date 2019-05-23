@@ -1,6 +1,6 @@
 # Cockney Rhymer
 
-A script to generate Cockney rhyming slang-style phrase constructions (just for fun).   
+A script to generate Cockney rhyming slang-style phrase constructions (just for fun).
 
 ## Rhyming Slang
 

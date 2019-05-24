@@ -158,6 +158,7 @@ Enjoy and Michael Banks for reading!
 * [Python](http://www.python.org)
 * [NLTK](https://www.nltk.org/)
 * [Inflect](https://github.com/jazzband/inflect)
+* [DataMuse API](https://www.datamuse.com/api/)
 * [British National Corpus (BNC)](http://natcorp.ox.ac.uk)
 
 ## Authors

@@ -24,7 +24,7 @@ While typically the rhyming word is omitted, it's not always the case. E.g. "boa
   <img src="/doc/sign.jpg"/>
 </p>
 
-Rhyming slang can be characterized as either phonetic or phono-semantic in form. This script is build around phonetic forms of rhyming slang only. Authentic Cockney rhyming slang doesn't only consist of rhyme associations; many of the Cockney expressions also have rich semantic links [read more here](https://www.theguardian.com/education/2014/jun/09/guide-to-cockney-rhyming-slang).
+Rhyming slang can be characterized as either phonetic or phono-semantic in form. This script is built around phonetic forms of rhyming slang only. Authentic Cockney rhyming slang doesn't only consist of rhyme associations; many of the Cockney expressions also have rich semantic links [read more here](https://www.theguardian.com/education/2014/jun/09/guide-to-cockney-rhyming-slang).
 
 ### How cockneyRhymer.py Works
 
@@ -130,7 +130,7 @@ Head	  | Hospital bed	  | Hospital         |
 Face	  | Market place    | Market           |
 Mouth	  | **New south**   | **New**          |
 
-Only the final rhyming slang match is a rather wonky.
+Only the final rhyming slang match is a rather wonky one.
 
 "Water Supplies" for "Eyes" was a close second!
 
